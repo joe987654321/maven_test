@@ -1,2 +1,2 @@
-# maven_test
-maven test
+This is java test code.
+Use maven to handle bothersome dependencies.

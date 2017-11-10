@@ -1,0 +1,14 @@
+site_name: Cat is cute
+pages:
+    - "Home": index.md
+    - "Api documents":
+        - "small_cat": small_cat.md
+        - "little_cat": little_cat.md
+        - "pretty_cat": pretty_cat.md
+    - "Getting Started": index.md
+    - "Foo xxx":
+        - "Foo 1": Foo_1.md
+        - "Foo 2": Foo_2.md
+    - "Other links":
+        - "Copyright": copyright.md
+        - "Generated links": related_links.md
