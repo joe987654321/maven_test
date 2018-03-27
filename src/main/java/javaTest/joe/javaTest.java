@@ -66,6 +66,8 @@ import com.typesafe.config.ConfigValue;
 import org.apache.commons.io.FileUtils;
 import org.eclipse.jetty.http.PathMap;
 
+import jsonparser.test.decodeEntity.EinvoiceCarrier;
+
 public class javaTest {
 
     private static class ID {
@@ -423,12 +425,24 @@ public class javaTest {
 //        System.out.println(gson.toJson(school));
 //
 //
+//        School school = new School();
+//        PropertyDescriptor pd = new PropertyDescriptor("students", School.class);
+//        System.out.println(pd.getWriteMethod().getName());
+//        EinvoiceCarrier e = new EinvoiceCarrier();
+//        try {
+//            System.out.println(e.getClass().getMethod("set" + StringUtils.capitalize("mtime"), String.class).getName());
+//        } catch (NoSuchMethodException e1) {
+//            e1.printStackTrace();
+//        }
     }
+
 
 
     public static class School {
         private List<String> students;
         private List<String> teachers;
+
+
 
         public School () {
             students = Arrays.asList();
