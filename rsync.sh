@@ -21,14 +21,14 @@ hs=
 #hs="$hs api2.cards.ec.twv.yahoo.com"
 #hs="$hs build6.ec.corp.tw1.yahoo.com"
 #hs="$hs b-api1.cards.ec.tw1.yahoo.com"
-hs="$hs oxy-oxygen-0a52c74b.corp.sg3.yahoo.com"
+hs="$hs dev"
 
 for h in $hs; do
     echo "====$h===="
     DEST="$h:~/$PROJECT_NAME/"
     
-    time rsync -PavxH --exclude 'target' --delete ./ "${DEST}"
-#    time rsync -PavxH  --delete ./ "${DEST}"
+    #time rsync -PavxH --exclude 'target' --delete ./ "${DEST}"
+    time rsync -PavxH  --delete ./ "${DEST}"
 done
 
 exit

@@ -15,6 +15,9 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
+import java.net.URI;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.Timestamp;
@@ -27,6 +30,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -35,11 +39,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Random;
 import java.util.Set;
+import java.util.TimeZone;
 import java.util.TreeSet;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
-
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectWriter;
@@ -48,10 +56,14 @@ import com.google.gson.Gson;
 import com.ning.http.client.AsyncCompletionHandler;
 import com.ning.http.client.AsyncHttpClient;
 import com.ning.http.client.Response;
+import com.ning.http.client.uri.Uri;
 import com.yahoo.parsec.clients.ParsecAsyncHttpClient;
 import com.yahoo.parsec.clients.ParsecAsyncHttpRequest;
+
+import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
 import org.codehaus.jettison.json.JSONException;
@@ -433,7 +445,51 @@ public class javaTest {
 //            System.out.println(e.getClass().getMethod("set" + StringUtils.capitalize("mtime"), String.class).getName());
 //        } catch (NoSuchMethodException e1) {
 //            e1.printStackTrace();
+//
+
+        //System.out.println(Boolean.valueOf("T"));
+
+
+
+
+//        byte[] decodeBytes = new byte[]{(byte)11, (byte)22, (byte)33, (byte)44};
+//
+//        int a = ByteBuffer.wrap(decodeBytes).order(ByteOrder.LITTLE_ENDIAN).getInt();
+//
+//        System.out.println(a);
+//
+//        String s = "ilikecatverymuch";
+//        StringBuilder sb = new StringBuilder(s);
+//        Random r = new Random();
+//        sb.insert(0,'e');
+//        int index = 1;
+//        while(index < s.length()) {
+//            sb.insert(index*2, (char)(r.nextInt(26) + 'a'));
+//            index++;
 //        }
+//
+//        System.out.println(sb.toString());
+//
+
+//        Integer l1 = Integer.parseInt("10") + Integer.parseInt("20");
+//        Integer l2 = Integer.parseInt("15") + Integer.parseInt("15");
+//        System.out.println(l1 == l2);
+//        Integer l3 = Integer.parseInt("1000") + Integer.parseInt("2000");
+//        Integer l4 = Integer.parseInt("1500") + Integer.parseInt("1500");
+//        System.out.println(l3 == l4);
+//
+        //Long l3 = Long.parseLong("1000") + Long.parseLong("2000");
+//        Long l3 = null;
+//
+//        System.out.println(l3 == 3000.0);
+//        System.out.println(3000 == l3);
+
+
+        Date currentDate = new Date();
+        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH", Locale.ENGLISH); // 2016-03-28
+//        sdFormat.setTimeZone(TimeZone.getTimeZone("UTC+0"));
+        String today = sdFormat.format(currentDate);
+        System.out.println(today);
     }
 
 
