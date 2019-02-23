@@ -26,7 +26,7 @@ public class SevenListGetterImpl implements StoreListGetter {
     private static final Charset CHARSET = Charset.forName("Big5");
 
     private static final int LINE_LENGTH = 137;
-    private static final int STORE_ID_START = 1;
+    private static final int STORE_ID_START = 0;
     private static final int STORE_ID_END = 6;
 
     public void setProcessFileList(List<String> processFileList) {

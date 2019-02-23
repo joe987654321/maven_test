@@ -63,9 +63,11 @@ import com.yahoo.parsec.clients.ParsecAsyncHttpRequest;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.builder.ToStringBuilder;
+
 import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.apache.tools.ant.taskdefs.condition.HasMethod;
 import org.codehaus.jettison.json.JSONException;
 import org.codehaus.jettison.json.JSONObject;
 
@@ -79,6 +81,9 @@ import org.apache.commons.io.FileUtils;
 import org.eclipse.jetty.http.PathMap;
 
 import jsonparser.test.decodeEntity.EinvoiceCarrier;
+
+import com.yahoo.parsec.config.ParsecConfig;
+import com.yahoo.parsec.config.ParsecConfigFactory;
 
 public class javaTest {
 
@@ -485,13 +490,29 @@ public class javaTest {
 //        System.out.println(3000 == l3);
 
 
-        Date currentDate = new Date();
-        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH", Locale.ENGLISH); // 2016-03-28
+//        Date currentDate = new Date();
+//        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd HH", Locale.ENGLISH); // 2016-03-28
 //        sdFormat.setTimeZone(TimeZone.getTimeZone("UTC+0"));
-        String today = sdFormat.format(currentDate);
-        System.out.println(today);
+//        String today = sdFormat.format(currentDate);
+//        System.out.println(today);
+
+//        String s = Instant.now().parse("03:00:00").toString();
+//
+//        System.out.println(s);
+
+
+        System.setProperty("parsec.conf.env.context", "beta.conf");
+        ParsecConfig parsecConfig = ParsecConfigFactory.load();
+        String s= parsecConfig.getString("AJFKSDLF");
+        System.out.println(s);
+//        Map<String, String> image = (Map<String, String>) parsecConfig.getAnyRef("image");
+//        System.out.println(image);
     }
 
+
+    public static String nowInISO8601() {
+        return Instant.now().toString();
+    }
 
 
     public static class School {

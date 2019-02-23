@@ -17,7 +17,7 @@
         <gmavenplus-plugin.version>1.4</gmavenplus-plugin.version>
         <groovy-all.version>2.4.7</groovy-all.version>
         <spock-core.version>1.1-groovy-2.4-rc-3</spock-core.version>
-        <maven-surefire-plugin.version>2.17</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>2.19</maven-surefire-plugin.version>
 
     </properties>
 
@@ -271,7 +271,51 @@
             <artifactId>jaxen</artifactId>
             <version>1.1.4</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.codehaus.groovy.modules.http-builder</groupId>
+            <artifactId>http-builder</artifactId>
+            <version>0.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yahoo.athenz</groupId>
+            <artifactId>athenz-cert-refresher</artifactId>
+            <version>1.8.3</version>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-ses</artifactId>
+            <version>1.11.483</version>
+        </dependency>
+        <dependency>
+            <groupId>yahoo.yinst.yjava_ysecure</groupId>
+            <artifactId>yjava_ysecure</artifactId>
+            <version>1.47.7</version>
+        </dependency>
+        <dependency>
+            <groupId>org.imgscalr</groupId>
+            <artifactId>imgscalr-lib</artifactId>
+            <version>4.2</version>
+        </dependency>
+        <dependency>
+            <groupId>yahoo.yinst.yjava_ycore</groupId>
+            <artifactId>yjava_ycore</artifactId>
+            <version>LATEST</version>
+        </dependency>
+        <dependency>
+            <groupId>com.yahoo.parsec</groupId>
+            <artifactId>parsec-config</artifactId>
+            <version>1.0.7</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-all</artifactId>
+        </dependency>
     </dependencies>
 
     <!--<repositories>-->

@@ -21,6 +21,7 @@ hs=
 #hs="$hs api2.cards.ec.twv.yahoo.com"
 #hs="$hs build6.ec.corp.tw1.yahoo.com"
 #hs="$hs b-api1.cards.ec.tw1.yahoo.com"
+hs="$hs b-prd1.ec.tw1.yahoo.com"
 hs="$hs dev"
 
 for h in $hs; do

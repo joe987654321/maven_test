@@ -79,4 +79,19 @@ class ZooTest extends Specification {
         "BOW"  | "BOW"
         "MEOW" | "MEOW"
     }
+
+    def aaa () {
+        when:
+        def a = "aaa"
+
+        then:
+        println a
+        print bbb
+        print ccc.getClass()
+
+        where:
+        bbb | ccc
+        0.1 | 0.2
+        0.2 | 0.3
+    }
 }
