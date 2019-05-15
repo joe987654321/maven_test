@@ -316,6 +316,21 @@
             <groupId>org.codehaus.groovy</groupId>
             <artifactId>groovy-all</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.yahoo.cryptogen</groupId>
+            <artifactId>credbank</artifactId>
+            <version>1.2.28</version>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.38</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.everit-org.json-schema</groupId>
+            <artifactId>org.everit.json.schema</artifactId>
+            <version>1.6.0.redhat-1</version>
+        </dependency>
     </dependencies>
 
     <!--<repositories>-->
