@@ -1,0 +1,82 @@
+{
+    "reward": {
+        "type" : "object",
+        "properties": {
+            "atos" :{
+                "type" : "array",
+                "items": {
+                    "type": "object",
+                        "properties": {
+                            "agree": { "type" : "string", "minLength": 1, "maxLength": 32 },
+                            "version": { "type" : "integer" },
+                            "createdTs": { "type" : "number", "maximum": 9223372036854775807 },
+                            "region": { "type" : "string", "minLength": 1, "maxLength": 16 },
+                            "displayVersion": { "type" : "string", "minLength": 1, "maxLength": 32 }
+                        },
+                    "required": ["agree","version","createdTs","region","displayVersion"],
+                    "additionalProperties": false
+                }
+            },
+            "suspension": {
+                "type" : "array",
+                "items": {
+                    "type": "object",
+                    "properties": {
+                        "status": { "type" : "boolean" },
+                        "createdTs": { "type" : "number", "maximum": 9223372036854775807 },
+                        "operator": { "type" : "string", "minLength": 1, "maxLength": 128 },
+                        "reason": { "type" : "string", "minLength": 1, "maxLength": 512 }
+                    },
+                    "required": ["status","createdTs","operator","reason"],
+                    "additionalProperties": false
+                }
+            }
+        },
+        "additionalProperties": false
+    },
+    "global": {
+        "type" : "array",
+        "items": {
+            "type": "object",
+            "properties": {
+                "address": { "type" : "string", "minLength": 1, "maxLength": 512 }
+            },
+            "required": ["address"],
+            "additionalProperties": false
+        }
+    },
+    "test1": {
+        "type" : "object",
+        "properties": {
+            "atos" : { "$ref": "#/reward/properties/atos" },
+            "suspension": { "$ref": "#/reward/properties/suspension" },
+            "testField": { "type" : "boolean" }
+        },
+        "additionalProperties": false
+    },
+    "test2": {
+        "type" : "object",
+        "properties": {
+            "address" : { "type" : "string", "minLength": 1, "maxLength": 512 },
+            "testField": { "type" : "boolean" }
+        },
+        "required": ["address"],
+        "additionalProperties": false
+    },
+
+    "type": "object",
+    "properties": {
+      "remembers": {
+        "type" : "object",
+        "properties": {
+          "reward": { "$ref": "#/reward" },
+          "global": { "$ref": "#/global" },
+          "test1": { "$ref": "#/test1" },
+          "test2": { "$ref": "#/test2" }
+        },
+        "additionalProperties": false
+      }
+    },
+    "required": ["remembers"],
+    "additionalProperties": false
+}

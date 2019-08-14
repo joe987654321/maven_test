@@ -157,7 +157,7 @@
         <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
-            <version>2.6.2</version>
+            <version>2.8.5</version>
         </dependency>
 
         <!-- for development -->
@@ -289,7 +289,7 @@
         <dependency>
             <groupId>com.amazonaws</groupId>
             <artifactId>aws-java-sdk-ses</artifactId>
-            <version>1.11.483</version>
+            <version>1.11.587</version>
         </dependency>
         <dependency>
             <groupId>yahoo.yinst.yjava_ysecure</groupId>
@@ -326,11 +326,46 @@
             <artifactId>mysql-connector-java</artifactId>
             <version>5.1.38</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.everit.json/org.everit.json.schema -->
         <dependency>
-            <groupId>com.github.everit-org.json-schema</groupId>
+            <groupId>org.everit.json</groupId>
             <artifactId>org.everit.json.schema</artifactId>
-            <version>1.6.0.redhat-1</version>
+            <version>1.5.1</version>
         </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-java-sdk-dynamodb</artifactId>
+            <version>1.11.294</version>
+        </dependency>
+        <dependency>
+            <groupId>yahoo.yinst.nevec_aws_credential_provider_java</groupId>
+            <artifactId>nevec_aws_credential_provider_java</artifactId>
+            <version>3.0.0.1</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/amazon-kinesis-producer -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>amazon-kinesis-producer</artifactId>
+            <version>0.12.11</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.amazonaws/amazon-kinesis-client -->
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>amazon-kinesis-client</artifactId>
+            <version>1.10.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>aws-lambda-java-events</artifactId>
+            <version>2.2.6</version>
+        </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>dynamodb-streams-kinesis-adapter</artifactId>
+            <version>1.4.0</version>
+        </dependency>
+
     </dependencies>
 
     <!--<repositories>-->
