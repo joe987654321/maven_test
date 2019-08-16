@@ -1,18 +1,17 @@
 package kinesis;
 
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDB;
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.v2.IRecordProcessor;
 import com.amazonaws.services.kinesis.clientlibrary.interfaces.v2.IRecordProcessorFactory;
 
 public class StreamsRecordProcessorFactory implements IRecordProcessorFactory {
-    private final AmazonDynamoDB dynamoDBClient;
+    private final S3DataHandler s3DataHandler;
 
-    public StreamsRecordProcessorFactory(AmazonDynamoDB dynamoDBClient) {
-        this.dynamoDBClient = dynamoDBClient;
+    public StreamsRecordProcessorFactory(S3DataHandler s3DataHandler) {
+        this.s3DataHandler = s3DataHandler;
     }
 
     @Override
     public IRecordProcessor createProcessor() {
-        return new StreamsRecordProcessorImpl(dynamoDBClient);
+        return new StreamsRecordProcessorImpl(s3DataHandler);
     }
 }

@@ -18,6 +18,9 @@
         </encoder>
     </appender>
 
+    <logger name="com.amazonaws.services.kinesis" level="WARN" additivity="true">
+    </logger>
+
     <root level="INFO">
         <appender-ref ref="CONSOLE"/>
     </root>

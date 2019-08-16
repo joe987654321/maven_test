@@ -54,10 +54,10 @@ public class WhereClauseTest {
             if (appsWhereClause.length() > 0) {
                 appsWhereClause.append(" OR ");
             }
-            appsWhereClause.append("guid = :guid");
+            appsWhereClause.append("rId = :rId");
             appsWhereClause.append(i);
 
-            namedParams.addValue("guid" + i, ownerGuidList.get(i));
+            namedParams.addValue("rId" + i, ownerGuidList.get(i));
         }
         if (appsWhereClause.length() > 0) {
             appsWhereClause.insert(0, "WHERE ");

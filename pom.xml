@@ -365,6 +365,11 @@
             <artifactId>dynamodb-streams-kinesis-adapter</artifactId>
             <version>1.4.0</version>
         </dependency>
+        <dependency>
+            <groupId>com.amazonaws</groupId>
+            <artifactId>amazon-kinesis-client</artifactId>
+            <version>1.10.0</version>
+        </dependency>
 
     </dependencies>
 

@@ -1,10 +1,17 @@
 package kinesis;
 
 import java.sql.Time;
+import java.time.temporal.ChronoUnit;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import com.amazonaws.auth.AWSCredentialsProvider;
 import com.amazonaws.regions.Regions;
@@ -43,8 +50,6 @@ public class KinesisWithDynomodbTest {
     }
 
     public static void main(String[] args) throws Exception {
-        System.out.println("Starting demo...");
-
         dynamoDBClient = AmazonDynamoDBClientBuilder.standard()
                 .withRegion(awsRegion)
                 .withCredentials(provider)
@@ -60,45 +65,42 @@ public class KinesisWithDynomodbTest {
         adapterClient = new AmazonDynamoDBStreamsAdapterClient(dynamoDBStreamsClient);
 
         //        String latestStreamArn = "arn:aws:dynamodb:ap-southeast-1:690060915618:table/Dev_Remember/stream/2019-08-05T08:16:29.888";
-        String latestStreamArn = describeTable(dynamoDBClient, "Dev_Remember").getTable().getLatestStreamArn();
-        System.out.println(latestStreamArn);
+        String latestStreamArn = describeTable(dynamoDBClient, "Int_Remember").getTable().getLatestStreamArn();
 
-//        String srcTable = tablePrefix + "-src";
-//        String destTable = tablePrefix + "-dest";
-        StreamsRecordProcessorFactory recordProcessorFactory = new StreamsRecordProcessorFactory(dynamoDBClient);
-
-//        setUpTables();
 
         Calendar cal = Calendar.getInstance();
         cal.add(Calendar.DATE, -1);
-        Date yesterday = cal.getTime();
+        long yesterday = cal.getTime().toInstant().truncatedTo(ChronoUnit.DAYS).getEpochSecond();
 
+        S3DataHandler s3DataHandler = new S3DataHandler(yesterday, provider);
+        StreamsRecordProcessorFactory recordProcessorFactory = new StreamsRecordProcessorFactory(s3DataHandler);
 
         KinesisClientLibConfiguration workerConfig = new KinesisClientLibConfiguration("streams-adapter-demo",
                 latestStreamArn,
                 provider,
                 "streams-demo-worker")
-                .withMaxRecords(10000)
+                .withMaxRecords(1000)
                 .withIdleTimeBetweenReadsInMillis(500)
-                .withTimestampAtInitialPositionInStream(yesterday);
+                .withInitialPositionInStream(InitialPositionInStream.TRIM_HORIZON);
 
-        System.out.println("Creating worker for stream: " + latestStreamArn);
         Worker worker = StreamsWorkerFactory
                 .createDynamoDbStreamsWorker(recordProcessorFactory, workerConfig, adapterClient, dynamoDBClient,
                         cloudWatchClient);
-        System.out.println("Starting worker...");
         Thread t = new Thread(worker);
         t.start();
 
-        while (true) {
-            Thread.sleep(10000);
-        }
-//        worker.shutdown();
-//        t.join();
-//
-//        System.out.println("Done.");
-    }
+        ScheduledExecutorService ses = Executors.newScheduledThreadPool(1);
+        ses.scheduleAtFixedRate(s3DataHandler::setForceUploadS3, 0, 10, TimeUnit.SECONDS);
 
+        t.join();
+
+//        System.out.println("await s3DataHandler...");
+//
+//        System.out.println("shutdown worker...");
+//        worker.shutdown();
+
+        //System.out.println("Done.");
+    }
 
     public static DescribeTableResult describeTable(AmazonDynamoDB client, String tableName) {
         return client.describeTable(new DescribeTableRequest().withTableName(tableName));
