@@ -16,45 +16,59 @@ import org.slf4j.LoggerFactory;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
 
+import kinesis.RememberDataSegment;
 
 public class AAA {
 
     static Logger logger = LoggerFactory.getLogger(AAA.class);
 
     public static void main(String[] args) throws ParseException {
-        List<RememberDataSegment> list = new ArrayList<>();
-        RememberDataSegment rememberDataSegment1 = new RememberDataSegment().withGuid("GG")
-                .withAppId("AA");
-        RememberDataSegment rememberDataSegment2 = new RememberDataSegment().withGuid("GG2")
-                .withAppId("AA2");
-        rememberDataSegment1.datum = new HashMap<>();
-        rememberDataSegment1.datum.put("hash1", new JsonParser().parse("{\"aaa\":\"bbb\",\"ccc\":\"ddd\"}"));
+//        List<RememberDataSegment> list = new ArrayList<>();
+//        RememberDataSegment rememberDataSegment1 = new RememberDataSegment().withRid("GG")
+//                .withAppId("AA");
+//        RememberDataSegment rememberDataSegment2 = new RememberDataSegment().withRid("GG2")
+//                .withAppId("AA2");
+//
+//        rememberDataSegment1.getDatum().put("hash1", new JsonParser().parse("{\"aaa\":\"bbb\",\"ccc\":\"ddd\"}"));
+//
+//
+//        rememberDataSegment2.getDatum().put("hash2", new JsonParser().parse("[{\"aaa\":\"bbb\"},{\"ccc\":\"ddd\"}]"));
+//
+//
+//        list.add(rememberDataSegment1);
+//        list.add(rememberDataSegment2);
+//        String s = new Gson().toJson(list);
+//        System.out.println(s);
 
-        rememberDataSegment2.datum = new HashMap<>();
-        rememberDataSegment2.datum.put("hash2", new JsonParser().parse("[{\"aaa\":\"bbb\"},{\"ccc\":\"ddd\"}]"));
+        String content = "[{\"rId\":\"IE4KT7RYWGNOOJXMGSFPIWE3JM\",\"appId\":\"apac-member\",\"updatedTs\":1566196245,\"datum\":{\"firstJoin\":[{\"market\":\"tw\",\"fromProperty\":\"media-tw\",\"createdTs\":1566196245}],\"atos\":[{\"displayVersion\":\"1.1.1\",\"version\":1,\"agree\":true,\"market\":\"tw\",\"createdTs\":1566196245}],\"subscription\":[{\"market\":\"tw\",\"createdTs\":1566196473,\"status\":false}]}},{\"rId\":\"NKZGBGG6J5DAMTFTRMVF3PTPNQ\",\"appId\":\"apac-member\",\"updatedTs\":1566196199,\"datum\":{\"firstJoin\":[{\"market\":\"tw\",\"fromProperty\":\"media-tw\",\"createdTs\":1563699378}],\"atos\":[{\"displayVersion\":\"1.0\",\"version\":1,\"agree\":true,\"createdTs\":1539624120.0,\"market\":\"tw\"}],\"subscription\":[{\"market\":\"tw\",\"createdTs\":1566196199,\"status\":true}]}}]";
+        Gson gson = new Gson();
+        List<RememberDataSegment> list = gson.fromJson(content, new TypeToken<List<RememberDataSegment>>() {}.getType());
+        list.forEach(rds -> {
+            System.out.println(rds.getrId());
+            System.out.println(rds.getAppId());
+            System.out.println(rds.getUpdatedTs());
+            System.out.println(rds.getDatum());
+        });
 
-
-        list.add(rememberDataSegment1);
-        list.add(rememberDataSegment2);
-        String s = new Gson().toJson(list);
-        System.out.println(s);
     }
 
-    public static class RememberDataSegment {
-        public String rId;
-        public String appId;
-        public Map<String, JsonElement> datum = new HashMap<>();
-
-        public RememberDataSegment withGuid(String rId) {
-            this.rId = rId;
-            return this;
-        }
-
-        public RememberDataSegment withAppId(String appId) {
-            this.appId = appId;
-            return this;
-        }
-    }
+//    public static class RememberDataSegment {
+//        public String rId;
+//        public String appId;
+//        public Map<String, JsonElement> datum = new HashMap<>();
+//
+//        public RememberDataSegment withGuid(String rId) {
+//            this.rId = rId;
+//            return this;
+//        }
+//
+//        public RememberDataSegment withAppId(String appId) {
+//            this.appId = appId;
+//            return this;
+//        }
+//    }
 }

@@ -39,7 +39,7 @@ public class KinesisWithDynomodbTest {
 
     private static Regions awsRegion = Regions.AP_SOUTHEAST_1;
 
-    private static String credentialPath = "/tmp/uid.aws_temp_credential";
+    private static final String credentialPath = "/tmp/uid.aws_temp_credential";
 
     private static AWSCredentialsProvider provider;
 

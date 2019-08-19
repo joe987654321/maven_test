@@ -39,9 +39,7 @@ public class StreamsRecordProcessorImpl implements IRecordProcessor {
                 com.amazonaws.services.dynamodbv2.model.Record record1 = ((RecordAdapter) record)
                         .getInternalObject();
 
-                if (!record1.getEventName().equals("REMOVE")) {
-                    s3DataHandler.handleData(record1.getDynamodb());
-                }
+                s3DataHandler.handleData(EventType.valueOf(record1.getEventName()), record1.getDynamodb());
 
             //    com.amazonaws.services.kinesis.clientlibrary.lib.worker.BlockOnParentShardTask;
             }

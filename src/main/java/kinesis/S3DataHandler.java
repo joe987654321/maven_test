@@ -1,5 +1,6 @@
 package kinesis;
 
+import java.awt.Event;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -11,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.amazonaws.AmazonServiceException;
 import com.amazonaws.ClientConfiguration;
 import com.amazonaws.Protocol;
 import com.amazonaws.SdkClientException;
@@ -25,7 +25,6 @@ import com.amazonaws.services.s3.model.ObjectTagging;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.Tag;
 import com.google.gson.Gson;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 
 public class S3DataHandler {
@@ -39,28 +38,6 @@ public class S3DataHandler {
     private Map<Long, Map<String, RememberDataSegment>> cachedDatum = new HashMap<>();
     private AmazonS3 s3Client;
 
-    public static class RememberDataSegment {
-        String rId;
-        String appId;
-        Long updatedTs;
-        Map<String, JsonElement> datum = new HashMap<>();
-
-        RememberDataSegment withGuid(String rId) {
-            this.rId = rId;
-            return this;
-        }
-
-        RememberDataSegment withAppId(String appId) {
-            this.appId = appId;
-            return this;
-        }
-
-        RememberDataSegment withUpdatedTs(Long updatedTs) {
-            this.updatedTs = updatedTs;
-            return this;
-        }
-    }
-
     S3DataHandler(long startTimeOfDataHandling, AWSCredentialsProvider provider) {
         this.startTimeOfDataHandling = startTimeOfDataHandling;
 
@@ -71,7 +48,10 @@ public class S3DataHandler {
                 .build();
     }
 
-    void handleData(StreamRecord streamRecord) {
+    void handleData(EventType eventType, StreamRecord streamRecord) {
+        if (EventType.REMOVE.equals(eventType)) {
+            return;
+        }
         long recordTime = TimeUnit.SECONDS.convert(
                 streamRecord.getApproximateCreationDateTime().getTime(),
                 TimeUnit.MILLISECONDS
@@ -90,12 +70,23 @@ public class S3DataHandler {
 
                     String ridAndAppId = rId + "__" + appId;
                     cachedDatum.get(startTimeOfDataHandling).putIfAbsent(ridAndAppId,
-                            new RememberDataSegment().withGuid(rId).withAppId(appId).withUpdatedTs(recordTime)
+                            new RememberDataSegment().withRid(rId).withAppId(appId).withUpdatedTs(recordTime)
                     );
 
-                    Map<String, AttributeValue> newDatum = streamRecord.getNewImage().get("datum").getM();
-                    newDatum.forEach((k, v) -> cachedDatum.get(startTimeOfDataHandling).get(ridAndAppId).datum
-                            .put(k, JSON_PARSER.parse(v.getS())));
+                    if (EventType.INSERT.equals(eventType)) {
+                        Map<String, AttributeValue> newDatum = streamRecord.getNewImage().get("datum").getM();
+                        newDatum.forEach((k, v) -> cachedDatum.get(startTimeOfDataHandling).get(ridAndAppId).getDatum()
+                                .put(k, JSON_PARSER.parse(v.getS())));
+                    } else if (EventType.MODIFY.equals(eventType)) {
+                        Map<String, AttributeValue> newDatum = streamRecord.getNewImage().get("datum").getM();
+                        Map<String, AttributeValue> oldDatum = streamRecord.getOldImage().get("datum").getM();
+                        newDatum.forEach((k, v) -> {
+                            if (!v.equals(oldDatum.get(k))) {
+                                cachedDatum.get(startTimeOfDataHandling).get(ridAndAppId).getDatum()
+                                        .put(k, JSON_PARSER.parse(v.getS()));
+                            }
+                        });
+                    }
                 }
             }
         }
