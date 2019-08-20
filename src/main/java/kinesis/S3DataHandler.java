@@ -87,6 +87,10 @@ public class S3DataHandler {
                             }
                         });
                     }
+
+                    if (cachedDatum.get(startTimeOfDataHandling).get(ridAndAppId).getDatum().isEmpty()) {
+                        cachedDatum.get(startTimeOfDataHandling).remove(ridAndAppId);
+                    }
                 }
             }
         }
